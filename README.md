@@ -64,7 +64,7 @@ public class App extends Application {
 * 若设置了Thread.setDefaultUncaughtExceptionHandler则可能无法捕获子线程异常。
 
 
-Cockroach采用android标准API编写，足够轻量，一般不会存在兼容性问题，可以兼容所有android版本
+Cockroach采用android标准API编写，无依赖，足够轻量，轻量到只有50行代码，一般不会存在兼容性问题，可以兼容所有android版本
 
 已上传到jcenter，明天(2017-2-15)就能用了 compile 'com.wanjian:cockroach:0.0.1'
 
