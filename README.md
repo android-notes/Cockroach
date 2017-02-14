@@ -58,4 +58,5 @@ public class App extends Application {
 
 Cockroach采用android标准API编写，足够轻量，一般不会存在兼容性问题，可以兼容所有android版本
 
+已上传到jcenter，明天(2017-2-15)就能用了 compile 'com.wanjian:cockroach:0.0.1'
 
