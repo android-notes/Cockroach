@@ -35,6 +35,6 @@ publish {
     groupId = 'com.wanjian'
     artifactId = 'cockroach'
     publishVersion = '0.0.1'
-    desc = '世上有打不死的小强也有永不crash的Android'
+    desc = '打不死的小强 , 永不crash的Android'
     website = 'https://github.com/android-notes/Cockroach'
 }
