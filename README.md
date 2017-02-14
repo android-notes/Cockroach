@@ -67,10 +67,12 @@ public class App extends Application {
 会导致app crash但view内部已经出现了问题，运行时就会出现很奇葩的现象。再比如activity声明周期方法中抛出了异常，则生
 命周期就会不完整，从而导致各种奇葩的现象。
 
-虽然会导致各种奇葩问题发生，但可以最大程度的保证APP正常运行，很多时候主线程即使抛出异常也不影响app的正常使用，比如我们
+虽然会导致各种奇葩问题发生，但可以最大程度的保证APP正常运行，很多时候我们希望主线程即使抛出异常也不影响app的正常使用，比如我们
 给某个view设置背景色时，由于view是null就会导致app crash，像这种问题我们更希望即使view没法设置颜色也不要crash，这
 时Cockroach就可以满足你的需求。
 
+handlerException(final Thread thread, final Throwable throwable)内部建议请求自己服务器决定该如何处理该异常，是
+直接忽略还是杀死APP又或者其他操作。
 
 
 Cockroach采用android标准API编写，无依赖，足够轻量，轻量到只有50行代码，一般不会存在兼容性问题，可以兼容所有android版本
