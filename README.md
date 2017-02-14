@@ -55,6 +55,14 @@ public class App extends Application {
 
 ```
 
+* 当主线程或子线程抛出异常时都会调用exceptionHandler.handlerException(Thread thread, Throwable throwable)
+     
+* exceptionHandler.handlerException可能运行在非UI线程中。
+    
+* handlerException内部建议手动try{  你的异常处理逻辑  }catch(Throwable e){ } ，以防handlerException内部再次抛出异常，导致循环调用handlerException
+    
+* 若设置了Thread.setDefaultUncaughtExceptionHandler则可能无法捕获子线程异常。
+
 
 Cockroach采用android标准API编写，足够轻量，一般不会存在兼容性问题，可以兼容所有android版本
 
