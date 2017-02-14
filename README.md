@@ -1,6 +1,6 @@
 # Cockroach
 
-> 世上有打不死的小强也有永不crash的Android
+> 打不死的小强,永不crash的Android
 
 
 # 使用方式
