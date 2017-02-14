@@ -1,10 +1,10 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'//添加
 
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.wanjian.cockroach"
         minSdkVersion 9
         targetSdkVersion 25
         versionCode 1
@@ -26,4 +26,15 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
     testCompile 'junit:junit:4.12'
+}
+
+
+//添加
+publish {
+//    userOrg = 'wanjiannotes'
+    groupId = 'com.wanjian'
+    artifactId = 'cockroach'
+    publishVersion = '0.0.1'
+    desc = '世上有打不死的小强也有永不crash的Android'
+    website = 'https://github.com/android-notes/Cockroach'
 }
