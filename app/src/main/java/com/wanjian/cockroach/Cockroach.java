@@ -24,7 +24,7 @@ public final class Cockroach {
      * <p>
      * exceptionHandler.handlerException可能运行在非UI线程中。
      * <p>
-     * handlerException内部建议手动try{}catch(Throwable e){ 你的异常处理逻辑} ，以防handlerException内部再次抛出异常，导致循环调用handlerException
+     * handlerException内部建议手动try{  你的异常处理逻辑  }catch(Throwable e){ } ，以防handlerException内部再次抛出异常，导致循环调用handlerException
      * <p>
      * 若设置了Thread.setDefaultUncaughtExceptionHandler则可能无法捕获子线程异常。
      *

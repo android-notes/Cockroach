@@ -17,15 +17,21 @@ public class App extends Application {
         super.onCreate();
 
         Cockroach.install(new Cockroach.ExceptionHandler() {
-            int i=0;
+
+           // handlerException内部建议手动try{  你的异常处理逻辑  }catch(Throwable e){ } ，以防handlerException内部再次抛出异常，导致循环调用handlerException
+
             @Override
             public void handlerException(final Thread thread, final Throwable throwable) {
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        Log.d("Cockroach",thread+"\n"+throwable.toString());
-                        Toast.makeText(App.this, "Exception Happend\n" + thread + "\n" + throwable.toString(), Toast.LENGTH_SHORT).show();
+                        try {
+                            Log.d("Cockroach", thread + "\n" + throwable.toString());
+                            Toast.makeText(App.this, "Exception Happend\n" + thread + "\n" + throwable.toString(), Toast.LENGTH_SHORT).show();
 //                        throw new RuntimeException("..."+(i++));
+                        } catch (Throwable e) {
+
+                        }
                     }
                 });
             }
