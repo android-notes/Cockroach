@@ -1,13 +1,13 @@
-# Cockroach
+## Cockroach
 
 > 打不死的小强,永不crash的Android
 
 
-# 使用方式
+### 使用方式
 
-自定义Application继承自android的Application，并在Application中初始化，越早初始化越好，可以在Aplication的onCreate中初始化
+自定义Application继承自android的Application，并在Application中装载，越早初始化越好，可以在Aplication的onCreate中初始化，当然也可以根据需要在任意地方（不一定要在主线程）装载，在任意地方卸载。可以多次装载和卸载。
 
-# 初始化方式
+例如：
 
 ```java
   
@@ -56,8 +56,94 @@ public class App extends Application {
 ```
 卸载 Cockroach
 
-` Cockroach.uninstall();`
+```java
 
+ Cockroach.uninstall();
+ 
+```
+
+
+### 测试
+装载Cockroach后点击view抛出异常和new Handler中抛出异常
+
+```java
+
+
+        findViewById(R.id.but1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                throw new RuntimeException("click exception...");
+            }
+        });
+
+        findViewById(R.id.but2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        throw new RuntimeException("handler exception...");
+                    }
+                });
+            }
+        });
+
+        findViewById(R.id.but3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        throw new RuntimeException("new thread exception...");
+                    }
+                }.start();
+            }
+        });
+
+
+```
+
+捕获到的堆栈如下,可以看到都已经被 `at com.wanjian.cockroach.Cockroach$1.run(Cockroach.java:47)` 拦截，APP没有任何影响，没有闪退，也没有重启进程
+
+```java
+
+02-15 11:25:16.940 29873-29873/wj.com.fuck W/System.err: java.lang.RuntimeException: click exception...
+02-15 11:25:16.940 29873-29873/wj.com.fuck W/System.err:     at wj.com.fuck.MainActivity$3.onClick(MainActivity.java:53)
+02-15 11:25:16.940 29873-29873/wj.com.fuck W/System.err:     at android.view.View.performClick(View.java:4909)
+02-15 11:25:16.940 29873-29873/wj.com.fuck W/System.err:     at android.view.View$PerformClick.run(View.java:20390)
+02-15 11:25:16.940 29873-29873/wj.com.fuck W/System.err:     at android.os.Handler.handleCallback(Handler.java:815)
+02-15 11:25:16.940 29873-29873/wj.com.fuck W/System.err:     at android.os.Handler.dispatchMessage(Handler.java:104)
+02-15 11:25:16.940 29873-29873/wj.com.fuck W/System.err:     at android.os.Looper.loop(Looper.java:194)
+02-15 11:25:16.940 29873-29873/wj.com.fuck W/System.err:     at com.wanjian.cockroach.Cockroach$1.run(Cockroach.java:47)
+02-15 11:25:16.941 29873-29873/wj.com.fuck W/System.err:     at android.os.Handler.handleCallback(Handler.java:815)
+02-15 11:25:16.941 29873-29873/wj.com.fuck W/System.err:     at android.os.Handler.dispatchMessage(Handler.java:104)
+02-15 11:25:16.941 29873-29873/wj.com.fuck W/System.err:     at android.os.Looper.loop(Looper.java:194)
+02-15 11:25:16.941 29873-29873/wj.com.fuck W/System.err:     at android.app.ActivityThread.main(ActivityThread.java:5826)
+02-15 11:25:16.941 29873-29873/wj.com.fuck W/System.err:     at java.lang.reflect.Method.invoke(Native Method)
+02-15 11:25:16.941 29873-29873/wj.com.fuck W/System.err:     at java.lang.reflect.Method.invoke(Method.java:372)
+02-15 11:25:16.941 29873-29873/wj.com.fuck W/System.err:     at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:1009)
+02-15 11:25:16.941 29873-29873/wj.com.fuck W/System.err:     at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:804)
+02-15 11:25:22.340 29873-29873/wj.com.fuck W/System.err: java.lang.RuntimeException: handler exception...
+02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at wj.com.fuck.MainActivity$4$1.run(MainActivity.java:63)
+02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at android.os.Handler.handleCallback(Handler.java:815)
+02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at android.os.Handler.dispatchMessage(Handler.java:104)
+02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at android.os.Looper.loop(Looper.java:194)
+02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at com.wanjian.cockroach.Cockroach$1.run(Cockroach.java:47)
+02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at android.os.Handler.handleCallback(Handler.java:815)
+02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at android.os.Handler.dispatchMessage(Handler.java:104)
+02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at android.os.Looper.loop(Looper.java:194)
+02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at android.app.ActivityThread.main(ActivityThread.java:5826)
+02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at java.lang.reflect.Method.invoke(Native Method)
+02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at java.lang.reflect.Method.invoke(Method.java:372)
+02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:1009)
+02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:804)
+02-15 11:25:24.457 29873-29873/wj.com.fuck W/System.err: java.lang.RuntimeException: new thread exception...
+02-15 11:25:24.457 29873-29873/wj.com.fuck W/System.err:     at wj.com.fuck.MainActivity$5$1.run(MainActivity.java:76)
+
+```
+
+### 注意
  
 * 当主线程或子线程抛出异常时都会调用exceptionHandler.handlerException(Thread thread, Throwable throwable)
      
