@@ -37,5 +37,8 @@ public class App extends Application {
                 });
             }
         });
+
+        // 卸载代码
+//        Cockroach.uninstall();
     }
 }

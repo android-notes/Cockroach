@@ -34,7 +34,7 @@ publish {
 //    userOrg = 'wanjiannotes'
     groupId = 'com.wanjian'
     artifactId = 'cockroach'
-    publishVersion = '0.0.1'
+    publishVersion = '0.0.5'
     desc = '打不死的小强 , 永不crash的Android'
     website = 'https://github.com/android-notes/Cockroach'
 }
