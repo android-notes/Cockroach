@@ -59,7 +59,48 @@ public class App extends Application {
 ` Cockroach.uninstall();`
 
 
-装载Cockroach后点击view抛出异常和new Handler中抛出异常捕获到的堆栈如下可以看到都已经被 `at com.wanjian.cockroach.Cockroach$1.run(Cockroach.java:47)` 拦截，APP没有任何影响，没有闪退，也没有重启进程
+装载Cockroach后点击view抛出异常和new Handler中抛出异常
+
+```java
+
+
+        findViewById(R.id.but1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                throw new RuntimeException("click exception...");
+            }
+        });
+
+        findViewById(R.id.but2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        throw new RuntimeException("handler exception...");
+                    }
+                });
+            }
+        });
+
+        findViewById(R.id.but3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        throw new RuntimeException("new thread exception...");
+                    }
+                }.start();
+            }
+        });
+
+
+```
+
+捕获到的堆栈如下,可以看到都已经被 `at com.wanjian.cockroach.Cockroach$1.run(Cockroach.java:47)` 拦截，APP没有任何影响，没有闪退，也没有重启进程
+
 ```html
 
 02-15 11:25:16.940 29873-29873/wj.com.fuck W/System.err: java.lang.RuntimeException: click exception...
