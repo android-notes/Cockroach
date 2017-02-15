@@ -1,13 +1,13 @@
-# Cockroach
+## Cockroach
 
 > 打不死的小强,永不crash的Android
 
 
-# 使用方式
+### 使用方式
 
-自定义Application继承自android的Application，并在Application中初始化，越早初始化越好，可以在Aplication的onCreate中初始化
+自定义Application继承自android的Application，并在Application中装载，越早初始化越好，可以在Aplication的onCreate中初始化，当然也可以根据需要在任意地方（不一定要在主线程）装载，在任意地方卸载。可以多次装载和卸载。
 
-# 初始化方式
+例如：
 
 ```java
   
@@ -56,9 +56,14 @@ public class App extends Application {
 ```
 卸载 Cockroach
 
-` Cockroach.uninstall();`
+```java
+
+ Cockroach.uninstall();
+ 
+```
 
 
+### 测试
 装载Cockroach后点击view抛出异常和new Handler中抛出异常
 
 ```java
@@ -101,7 +106,7 @@ public class App extends Application {
 
 捕获到的堆栈如下,可以看到都已经被 `at com.wanjian.cockroach.Cockroach$1.run(Cockroach.java:47)` 拦截，APP没有任何影响，没有闪退，也没有重启进程
 
-```html
+```java
 
 02-15 11:25:16.940 29873-29873/wj.com.fuck W/System.err: java.lang.RuntimeException: click exception...
 02-15 11:25:16.940 29873-29873/wj.com.fuck W/System.err:     at wj.com.fuck.MainActivity$3.onClick(MainActivity.java:53)
@@ -138,6 +143,7 @@ public class App extends Application {
 
 ```
 
+### 注意
  
 * 当主线程或子线程抛出异常时都会调用exceptionHandler.handlerException(Thread thread, Throwable throwable)
      
