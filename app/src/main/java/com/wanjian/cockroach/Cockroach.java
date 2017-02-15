@@ -10,7 +10,7 @@ import android.os.Looper;
 
 public final class Cockroach {
 
-    interface ExceptionHandler {
+    public interface ExceptionHandler {
 
         void handlerException(Thread thread, Throwable throwable);
     }
