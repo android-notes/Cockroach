@@ -8,9 +8,11 @@ import android.widget.Toast;
 
 /**
  * Created by wanjian on 2017/2/14.
+ *
+ * Example
  */
 
-public class App extends Application {
+class App extends Application {
 
     @Override
     public void onCreate() {
