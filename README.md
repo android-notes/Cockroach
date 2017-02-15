@@ -54,7 +54,11 @@ public class App extends Application {
 
 
 ```
+卸载 Cockroach
 
+` Cockroach.uninstall();`
+
+ 
 * 当主线程或子线程抛出异常时都会调用exceptionHandler.handlerException(Thread thread, Throwable throwable)
      
 * exceptionHandler.handlerException可能运行在非UI线程中。
