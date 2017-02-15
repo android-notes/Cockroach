@@ -81,6 +81,6 @@ handlerException(final Thread thread, final Throwable throwable)内部建议请�
 
 Cockroach采用android标准API编写，无依赖，足够轻量，轻量到只有50行代码，一般不会存在兼容性问题，可以兼容所有android版本
 
-已上传到jcenter，明天(2017-2-15)就能用了 compile 'com.wanjian:cockroach:0.0.1'
+已上传到jcenter， compile 'com.wanjian:cockroach:0.0.5'
 
 效果视频  [http://weibo.com/tv/v/EvxnTmkdG?fid=1034:6b6574d722c5e8c74882622f10273452](http://weibo.com/tv/v/EvxnTmkdG?fid=1034:6b6574d722c5e8c74882622f10273452)
