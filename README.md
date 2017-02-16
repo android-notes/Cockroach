@@ -1,3 +1,6 @@
+
+[English](https://github.com/android-notes/Cockroach/blob/master/README_en.md)
+
 ## Cockroach
 
 > 打不死的小强,永不crash的Android
