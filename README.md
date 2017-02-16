@@ -38,8 +38,7 @@ public class App extends Application {
                     @Override
                     public void run() {
                         try {
-                            Log.d("Cockroach", thread + "\n" + throwable.toString());
-                            throwable.printStackTrace();
+                            Log.e("AndroidRuntime","--->CockroachException:"+thread+"<---",throwable);
                             Toast.makeText(App.this, "Exception Happend\n" + thread + "\n" + throwable.toString(), Toast.LENGTH_SHORT).show();
 //                        throw new RuntimeException("..."+(i++));
                         } catch (Throwable e) {
@@ -109,38 +108,42 @@ public class App extends Application {
 
 ```java
 
-02-15 11:25:16.940 29873-29873/wj.com.fuck W/System.err: java.lang.RuntimeException: click exception...
-02-15 11:25:16.940 29873-29873/wj.com.fuck W/System.err:     at wj.com.fuck.MainActivity$3.onClick(MainActivity.java:53)
-02-15 11:25:16.940 29873-29873/wj.com.fuck W/System.err:     at android.view.View.performClick(View.java:4909)
-02-15 11:25:16.940 29873-29873/wj.com.fuck W/System.err:     at android.view.View$PerformClick.run(View.java:20390)
-02-15 11:25:16.940 29873-29873/wj.com.fuck W/System.err:     at android.os.Handler.handleCallback(Handler.java:815)
-02-15 11:25:16.940 29873-29873/wj.com.fuck W/System.err:     at android.os.Handler.dispatchMessage(Handler.java:104)
-02-15 11:25:16.940 29873-29873/wj.com.fuck W/System.err:     at android.os.Looper.loop(Looper.java:194)
-02-15 11:25:16.940 29873-29873/wj.com.fuck W/System.err:     at com.wanjian.cockroach.Cockroach$1.run(Cockroach.java:47)
-02-15 11:25:16.941 29873-29873/wj.com.fuck W/System.err:     at android.os.Handler.handleCallback(Handler.java:815)
-02-15 11:25:16.941 29873-29873/wj.com.fuck W/System.err:     at android.os.Handler.dispatchMessage(Handler.java:104)
-02-15 11:25:16.941 29873-29873/wj.com.fuck W/System.err:     at android.os.Looper.loop(Looper.java:194)
-02-15 11:25:16.941 29873-29873/wj.com.fuck W/System.err:     at android.app.ActivityThread.main(ActivityThread.java:5826)
-02-15 11:25:16.941 29873-29873/wj.com.fuck W/System.err:     at java.lang.reflect.Method.invoke(Native Method)
-02-15 11:25:16.941 29873-29873/wj.com.fuck W/System.err:     at java.lang.reflect.Method.invoke(Method.java:372)
-02-15 11:25:16.941 29873-29873/wj.com.fuck W/System.err:     at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:1009)
-02-15 11:25:16.941 29873-29873/wj.com.fuck W/System.err:     at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:804)
-02-15 11:25:22.340 29873-29873/wj.com.fuck W/System.err: java.lang.RuntimeException: handler exception...
-02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at wj.com.fuck.MainActivity$4$1.run(MainActivity.java:63)
-02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at android.os.Handler.handleCallback(Handler.java:815)
-02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at android.os.Handler.dispatchMessage(Handler.java:104)
-02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at android.os.Looper.loop(Looper.java:194)
-02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at com.wanjian.cockroach.Cockroach$1.run(Cockroach.java:47)
-02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at android.os.Handler.handleCallback(Handler.java:815)
-02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at android.os.Handler.dispatchMessage(Handler.java:104)
-02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at android.os.Looper.loop(Looper.java:194)
-02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at android.app.ActivityThread.main(ActivityThread.java:5826)
-02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at java.lang.reflect.Method.invoke(Native Method)
-02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at java.lang.reflect.Method.invoke(Method.java:372)
-02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:1009)
-02-15 11:25:22.341 29873-29873/wj.com.fuck W/System.err:     at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:804)
-02-15 11:25:24.457 29873-29873/wj.com.fuck W/System.err: java.lang.RuntimeException: new thread exception...
-02-15 11:25:24.457 29873-29873/wj.com.fuck W/System.err:     at wj.com.fuck.MainActivity$5$1.run(MainActivity.java:76)
+02-16 09:58:00.660 21199-21199/wj.com.fuck E/AndroidRuntime: --->CockroachException:Thread[main,5,main]<---
+                                                             java.lang.RuntimeException: click exception...
+                                                                 at wj.com.fuck.MainActivity$3.onClick(MainActivity.java:53)
+                                                                 at android.view.View.performClick(View.java:4909)
+                                                                 at android.view.View$PerformClick.run(View.java:20390)
+                                                                 at android.os.Handler.handleCallback(Handler.java:815)
+                                                                 at android.os.Handler.dispatchMessage(Handler.java:104)
+                                                                 at android.os.Looper.loop(Looper.java:194)
+                                                                 at com.wanjian.cockroach.Cockroach$1.run(Cockroach.java:47)
+                                                                 at android.os.Handler.handleCallback(Handler.java:815)
+                                                                 at android.os.Handler.dispatchMessage(Handler.java:104)
+                                                                 at android.os.Looper.loop(Looper.java:194)
+                                                                 at android.app.ActivityThread.main(ActivityThread.java:5826)
+                                                                 at java.lang.reflect.Method.invoke(Native Method)
+                                                                 at java.lang.reflect.Method.invoke(Method.java:372)
+                                                                 at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:1009)
+                                                                 at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:804)
+02-16 09:58:12.401 21199-21199/wj.com.fuck E/AndroidRuntime: --->CockroachException:Thread[main,5,main]<---
+                                                             java.lang.RuntimeException: handler exception...
+                                                                 at wj.com.fuck.MainActivity$4$1.run(MainActivity.java:63)
+                                                                 at android.os.Handler.handleCallback(Handler.java:815)
+                                                                 at android.os.Handler.dispatchMessage(Handler.java:104)
+                                                                 at android.os.Looper.loop(Looper.java:194)
+                                                                 at com.wanjian.cockroach.Cockroach$1.run(Cockroach.java:47)
+                                                                 at android.os.Handler.handleCallback(Handler.java:815)
+                                                                 at android.os.Handler.dispatchMessage(Handler.java:104)
+                                                                 at android.os.Looper.loop(Looper.java:194)
+                                                                 at android.app.ActivityThread.main(ActivityThread.java:5826)
+                                                                 at java.lang.reflect.Method.invoke(Native Method)
+                                                                 at java.lang.reflect.Method.invoke(Method.java:372)
+                                                                 at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:1009)
+                                                                 at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:804)
+02-16 09:58:13.241 21199-21199/wj.com.fuck E/AndroidRuntime: --->CockroachException:Thread[Thread-26326,5,main]<---
+                                                             java.lang.RuntimeException: new thread exception...
+                                                                 at wj.com.fuck.MainActivity$5$1.run(MainActivity.java:76)
+
 
 ```
 
@@ -149,20 +152,20 @@ public class App extends Application {
 
 ```java
 
-02-15 12:20:40.298 4626-4626/wj.com.fuck E/AndroidRuntime: FATAL EXCEPTION: main
-                                                           Process: wj.com.fuck, PID: 4626
-                                                           java.lang.RuntimeException: click exception...
-                                                               at wj.com.fuck.MainActivity$3.onClick(MainActivity.java:53)
-                                                               at android.view.View.performClick(View.java:4909)
-                                                               at android.view.View$PerformClick.run(View.java:20390)
-                                                               at android.os.Handler.handleCallback(Handler.java:815)
-                                                               at android.os.Handler.dispatchMessage(Handler.java:104)
-                                                               at android.os.Looper.loop(Looper.java:194)
-                                                               at android.app.ActivityThread.main(ActivityThread.java:5826)
-                                                               at java.lang.reflect.Method.invoke(Native Method)
-                                                               at java.lang.reflect.Method.invoke(Method.java:372)
-                                                               at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:1009)
-                                                               at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:804)
+02-16 09:59:01.251 21199-21199/wj.com.fuck E/AndroidRuntime: FATAL EXCEPTION: main
+                                                             Process: wj.com.fuck, PID: 21199
+                                                             java.lang.RuntimeException: click exception...
+                                                                 at wj.com.fuck.MainActivity$3.onClick(MainActivity.java:53)
+                                                                 at android.view.View.performClick(View.java:4909)
+                                                                 at android.view.View$PerformClick.run(View.java:20390)
+                                                                 at android.os.Handler.handleCallback(Handler.java:815)
+                                                                 at android.os.Handler.dispatchMessage(Handler.java:104)
+                                                                 at android.os.Looper.loop(Looper.java:194)
+                                                                 at android.app.ActivityThread.main(ActivityThread.java:5826)
+                                                                 at java.lang.reflect.Method.invoke(Native Method)
+                                                                 at java.lang.reflect.Method.invoke(Method.java:372)
+                                                                 at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:1009)
+                                                                 at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:804)
 
 
 ```             
