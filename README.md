@@ -69,6 +69,23 @@ public class App extends Application {
 ```java
 
 
+        final TextView textView = (TextView) findViewById(R.id.text);
+        findViewById(R.id.install).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textView.setText("已安装 Cockroach");
+                install();
+            }
+        });
+
+        findViewById(R.id.uninstall).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textView.setText("已卸载 Cockroach");
+                Cockroach.uninstall();
+            }
+        });
+
         findViewById(R.id.but1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +118,38 @@ public class App extends Application {
             }
         });
 
+        findViewById(R.id.but4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), SecActivity.class));
+            }
+        });
+
+    }
+
+    private void install() {
+        Cockroach.install(new Cockroach.ExceptionHandler() {
+            @Override
+            public void handlerException(final Thread thread, final Throwable throwable) {
+
+                Log.d("Cockroach", "MainThread: " + Looper.getMainLooper().getThread() + "  curThread: " + Thread.currentThread());
+
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+
+                            Log.e("AndroidRuntime","--->CockroachException:"+thread+"<---",throwable);
+                            Toast.makeText(getApplicationContext(), "Exception Happend\n" + thread + "\n" + throwable.toString(), Toast.LENGTH_SHORT).show();
+//                        throw new RuntimeException("..."+(i++));
+                        } catch (Throwable e) {
+
+                        }
+                    }
+                });
+            }
+        });
+    }
 
 ```
 
