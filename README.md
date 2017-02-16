@@ -3,8 +3,9 @@
 
 ## Cockroach
 
-> 打不死的小强,永不crash的Android
+> 打不死的小强,永不crash的Android。
 
+> android 开发中最怕的就是crash，好好的APP测试时没问题，一发布就各种crash，只能通过紧急发布hotfix来解决，但准备hotfix的时间可能很长，导致这段时间用户体验非常差，android中虽然可以通过设置 Thread.setDefaultUncaughtExceptionHandler来捕获所有线程的异常，但主线程抛出异常时仍旧会导致activity闪退，app进程重启。使用Cockroach后就可以保证不管怎样抛异常activity都不会闪退，app进程也不会重启。
 
 ### 使用方式
 
