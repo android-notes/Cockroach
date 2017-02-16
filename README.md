@@ -143,6 +143,33 @@ public class App extends Application {
 
 ```
 
+
+当卸载`Cockroach`后再在click中抛出异常，日志如下
+
+```java
+
+02-15 12:20:40.298 4626-4626/wj.com.fuck E/AndroidRuntime: FATAL EXCEPTION: main
+                                                           Process: wj.com.fuck, PID: 4626
+                                                           java.lang.RuntimeException: click exception...
+                                                               at wj.com.fuck.MainActivity$3.onClick(MainActivity.java:53)
+                                                               at android.view.View.performClick(View.java:4909)
+                                                               at android.view.View$PerformClick.run(View.java:20390)
+                                                               at android.os.Handler.handleCallback(Handler.java:815)
+                                                               at android.os.Handler.dispatchMessage(Handler.java:104)
+                                                               at android.os.Looper.loop(Looper.java:194)
+                                                               at android.app.ActivityThread.main(ActivityThread.java:5826)
+                                                               at java.lang.reflect.Method.invoke(Native Method)
+                                                               at java.lang.reflect.Method.invoke(Method.java:372)
+                                                               at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:1009)
+                                                               at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:804)
+
+
+```             
+          
+ 可以看到 ` at com.wanjian.cockroach.Cockroach$1.run(Cockroach.java:47)` 没有拦截，并且APP crash了。
+
+
+
 ### 注意
  
 * 当主线程或子线程抛出异常时都会调用exceptionHandler.handlerException(Thread thread, Throwable throwable)
@@ -165,7 +192,7 @@ handlerException(final Thread thread, final Throwable throwable)内部建议请�
 直接忽略还是杀死APP又或者其他操作。
 
 
-Cockroach采用android标准API编写，无依赖，足够轻量，轻量到只有50行代码，一般不会存在兼容性问题，可以兼容所有android版本
+Cockroach采用android标准API编写，无依赖，足够轻量，轻量到只有不到100行代码，一般不会存在兼容性问题，也不存在性能上的问题，可以兼容所有android版本。
 
 已上传到jcenter， compile 'com.wanjian:cockroach:0.0.5'
 
