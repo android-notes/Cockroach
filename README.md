@@ -39,6 +39,7 @@ public class App extends Application {
                     public void run() {
                         try {
                             Log.d("Cockroach", thread + "\n" + throwable.toString());
+                            throwable.printStackTrace();
                             Toast.makeText(App.this, "Exception Happend\n" + thread + "\n" + throwable.toString(), Toast.LENGTH_SHORT).show();
 //                        throw new RuntimeException("..."+(i++));
                         } catch (Throwable e) {
