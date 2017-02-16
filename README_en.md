@@ -5,6 +5,8 @@
 
 > Never crash Android
 
+> Android development is most afraid of the crash, the test no problem, released on the crash, only through the emergency release hotfix to solve, but the time to prepare the hotfix may be very long, resulting in this time the user experience is very poor, android can pass Set Thread.setDefaultUncaughtExceptionHandler to catch all threads of the exception, but the main thread throws an exception will still cause the activity flashes, app process restart. Use Cockroach can guarantee that no matter how abnormal activities will not flash, app process will not restart.
+
 
 ### Manual
 
