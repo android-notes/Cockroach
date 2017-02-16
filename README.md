@@ -1,5 +1,9 @@
 
-[English](https://github.com/android-notes/Cockroach/blob/master/README_en.md)
+Language
+
+* [English](https://github.com/android-notes/Cockroach/blob/master/README_en.md)
+* [Chinese]
+
 
 ## Cockroach
 
