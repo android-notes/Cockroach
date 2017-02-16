@@ -254,3 +254,11 @@ Cockroach采用android标准API编写，无依赖，足够轻量，轻量到只�
 已上传到jcenter， compile 'com.wanjian:cockroach:0.0.5'
 
 效果视频  [http://weibo.com/tv/v/EvM57BR6O?fid=1034:40b2f631632f0cf2a096a09c65db89ad](http://weibo.com/tv/v/EvM57BR6O?fid=1034:40b2f631632f0cf2a096a09c65db89ad)
+
+
+
+### 原理分析  
+
+[原理分析](https://github.com/android-notes/Cockroach/blob/master/%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90.md)
+
+
