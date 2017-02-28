@@ -51,6 +51,7 @@ public class App extends Application {
                     @Override
                     public void run() {
                         try {
+                        //建议使用下面方式在控制台打印异常，这样就可以在Error级别看到红色log
                             Log.e("AndroidRuntime","--->CockroachException:"+thread+"<---",throwable);
                             Toast.makeText(App.this, "Exception Happend\n" + thread + "\n" + throwable.toString(), Toast.LENGTH_SHORT).show();
 //                        throw new RuntimeException("..."+(i++));
