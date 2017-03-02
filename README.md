@@ -4,6 +4,20 @@ Language
 * [English](https://github.com/android-notes/Cockroach/blob/master/README_en.md)
 * [Chinese]
 
+# 很多人曲解了这个库的用意，现特声明如下
+当APP主线程抛出异常时就会导致APP crash，可能是由于view点击时抛出了异常，也有可能是Listview滚动时为某个view设置数据导致抛出了异常等等，像这种异常我们更希望即使点击没反应，Listview没法继续往下滑动也不希望APP crash，用户顶多会认为是点了没反应，或者认为是本来就不可以点击，或者认为是Listview滚动到底了，没有更多数据了。这样总比每次都crash要好很多，起码不会由于频繁crash导致用户卸载APP。当然这个库也存在不确定因素，比如Activity初始化时等抛出了异常，就会导致Activity什么都不显示，但这并不是ANR，是由于Activity生命周期没有执行完整导致，issues中很多人认为这是ANR，进而导致微博上有人说这个库捕获到异常后会导致ANR，其实这个时候主线程并没有被阻塞，也就不存在ANR。
+
+当线上发现进入某个Activity时有大量crash时，若装载Cockroach后不影响APP运行，不影响用户体检，就可以通过后端控制来自动开启Cockroach，当退出这个Activity后自动卸载Cockroach。
+
+下文也明确说明了
+> 可以根据需要在任意地方装载，在任意地方卸载。
+> 虽然可以捕获到所有异常，但可能会导致一些莫名其妙的问题，比如view初始化时发生了异常，异常后面的代码得不到执行，虽然不
+会导致app crash但view内部已经出现了问题，运行时就会出现很奇葩的现象。再比如activity声明周期方法中抛出了异常，则生
+命周期就会不完整，从而导致各种奇葩的现象。
+
+
+所以关键是要如何正确利用这个库
+
 
 ## Cockroach
 
