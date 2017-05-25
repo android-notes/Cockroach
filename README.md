@@ -280,6 +280,7 @@ Cockroach采用android标准API编写，无依赖，足够轻量，轻量到只�
 
 效果视频  [http://weibo.com/tv/v/EvM57BR6O?fid=1034:40b2f631632f0cf2a096a09c65db89ad](http://weibo.com/tv/v/EvM57BR6O?fid=1034:40b2f631632f0cf2a096a09c65db89ad)
 
+[https://github.com/android-notes/Cockroach/blob/master/cockroach.mp4?raw=true](https://github.com/android-notes/Cockroach/blob/master/cockroach.mp4?raw=true)
 
 
 ### 原理分析  
