@@ -1,37 +1,18 @@
 
-Language
-
-* [English](https://github.com/android-notes/Cockroach/blob/master/README_en.md)
-* [Chinese]
-
-# 很多人曲解了这个库的用意，现特声明如下
-当APP主线程抛出异常时就会导致APP crash，可能是由于view点击时抛出了异常等等，像这种异常我们更希望即使点击没反应也不要crash，用户顶多会认为是点了没反应，或者认为是本来就不可以点击，这时候就可以使用Cockroach，而且没有其他副作用，用户就跟没点一样，并且不影响其他逻辑。这样总比每次都crash要好很多，起码不会由于频繁crash导致用户卸载APP。当然这个库也存在不确定因素，比如Activity初始化时等抛出了异常，就会导致Activity什么都不显示，但这并不是ANR，是由于Activity生命周期没有执行完整导致，issues中很多人认为这是ANR，进而导致微博上有人说这个库捕获到异常后会导致ANR，其实这个时候主线程并没有被阻塞，也就不存在ANR。当然这个库对于native异常和ANR也是无能为力的，只能保证java异常不会导致crash。
-
-
-当线上发现进入某个Activity时有大量crash时，若装载Cockroach后不影响APP运行，不影响用户体检，就可以通过后端控制来自动开启Cockroach，当退出这个Activity后自动卸载Cockroach。
-
-下文也明确说明了
-> 可以根据需要在任意地方装载，在任意地方卸载。
-> 虽然可以捕获到所有异常，但可能会导致一些莫名其妙的问题，比如view初始化时发生了异常，异常后面的代码得不到执行，虽然不
-会导致app crash但view内部已经出现了问题，运行时就会出现很奇葩的现象。再比如activity声明周期方法中抛出了异常，则生
-命周期就会不完整，从而导致各种奇葩的现象。
-
-
-所以关键是要如何正确利用这个库
-
+> Translate via google
 
 ## Cockroach
 
-> 打不死的小强,永不crash的Android。
+> Never crash Android
 
-> android 开发中最怕的就是crash，好好的APP测试时没问题，一发布就各种crash，只能通过紧急发布hotfix来解决，但准备hotfix的时间可能很长，导致这段时间用户体验非常差，android中虽然可以通过设置 Thread.setDefaultUncaughtExceptionHandler来捕获所有线程的异常，但主线程抛出异常时仍旧会导致activity闪退，app进程重启。使用Cockroach后就可以保证不管怎样抛异常activity都不会闪退，app进程也不会重启。
-关于DefaultUncaughtExceptionHandler的用法参考这 [DefaultUncaughtExceptionHandler](https://github.com/android-notes/Cockroach/blob/master/DefaultUncaughtExceptionHandler.md)
+> Android development is most afraid of the crash, the test no problem, released on the crash, only through the emergency release hotfix to solve, but the time to prepare the hotfix may be very long, resulting in this time the user experience is very poor, android can pass Set Thread.setDefaultUncaughtExceptionHandler to catch all threads of the exception, but the main thread throws an exception will still cause the activity flashes, app process restart. Use Cockroach can guarantee that no matter how abnormal activities will not flash, app process will not restart.
 
-### 使用方式
 
-自定义Application继承自android的Application，并在Application中装载，越早初始化越好，可以在Aplication的onCreate中初始化，当然也可以根据需要在任意地方（不一定要在主线程）装载，在任意地方卸载。可以多次装载和卸载。
+### Manual
 
-例如：
+Custom Application inherited from the android application, and in the Application load, the sooner the better, you can in the Aplication onCreate initialization, of course, can be anywhere in the need (not necessarily in the main thread) loading, in any place Unloading. Can be loaded and unloaded multiple times.
+
+E.g:
 
 ```java
   
@@ -54,19 +35,14 @@ public class App extends Application {
 
         Cockroach.install(new Cockroach.ExceptionHandler() {
 
-           // handlerException内部建议手动try{  你的异常处理逻辑  }catch(Throwable e){ } ，以防handlerException内部再次抛出异常，导致循环调用handlerException
+           //HandlerException internal advice manually try {your exception handling logic} catch (throwable e) {}, in case handlerException internally throws an exception again, causing the loop to call handlerException
 
             @Override
             public void handlerException(final Thread thread, final Throwable throwable) {
-            //开发时使用Cockroach可能不容易发现bug，所以建议开发阶段在handlerException中用Toast谈个提示框，
-            //由于handlerException可能运行在非ui线程中，Toast又需要在主线程，所以new了一个new Handler(Looper.getMainLooper())，
-            //所以千万不要在下面的run方法中执行耗时操作，因为run已经运行在了ui线程中。
-            //new Handler(Looper.getMainLooper())只是为了能弹出个toast，并无其他用途
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                        //建议使用下面方式在控制台打印异常，这样就可以在Error级别看到红色log
                             Log.e("AndroidRuntime","--->CockroachException:"+thread+"<---",throwable);
                             Toast.makeText(App.this, "Exception Happend\n" + thread + "\n" + throwable.toString(), Toast.LENGTH_SHORT).show();
 //                        throw new RuntimeException("..."+(i++));
@@ -83,7 +59,7 @@ public class App extends Application {
 
 
 ```
-卸载 Cockroach
+uninstall Cockroach
 
 ```java
 
@@ -92,8 +68,9 @@ public class App extends Application {
 ```
 
 
-### 测试
-装载Cockroach后点击view抛出异常和new Handler中抛出异常
+### Test
+
+After loading Cockroach, click on the view to throw the exception and throw an exception in the new Handler
 
 ```java
 
@@ -102,7 +79,7 @@ public class App extends Application {
         findViewById(R.id.install).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText("已安装 Cockroach");
+                textView.setText("Installed Cockroach");
                 install();
             }
         });
@@ -110,7 +87,7 @@ public class App extends Application {
         findViewById(R.id.uninstall).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText("已卸载 Cockroach");
+                textView.setText("UnInstalled Cockroach");
                 Cockroach.uninstall();
             }
         });
@@ -182,7 +159,7 @@ public class App extends Application {
 
 ```
 
-捕获到的堆栈如下,可以看到都已经被 `at com.wanjian.cockroach.Cockroach$1.run(Cockroach.java:47)` 拦截，APP没有任何影响，没有闪退，也没有重启进程
+Capture the stack as follows, you can see that has been `at com.wanjian.cockroach.Cockroach$1.run(Cockroach.java:47)` Interception, APP no effect, no flashback, there is no restart process
 
 ```java
 
@@ -226,7 +203,7 @@ public class App extends Application {
 ```
 
 
-当卸载`Cockroach`后再在click中抛出异常，日志如下
+When uninstalling `Cockroach` and then throw an exception in the click, the log is as follows
 
 ```java
 
@@ -248,42 +225,32 @@ public class App extends Application {
 
 ```             
           
- 可以看到 ` at com.wanjian.cockroach.Cockroach$1.run(Cockroach.java:47)` 没有拦截，并且APP crash了。
+ can be seen ` at com.wanjian.cockroach.Cockroach$1.run(Cockroach.java:47)` no interception, and APP crash.
 
 
-
-### 注意
+### Note
  
-* 当主线程或子线程抛出异常时都会调用exceptionHandler.handlerException(Thread thread, Throwable throwable)
-     
-* exceptionHandler.handlerException可能运行在非UI线程中。
+* An exceptionHandler.handlerException (Thread thread, Throwable throwable) is called when the main thread or child thread throws an exception.     
+* ExceptionHandler.handlerException may run in a non-UI thread.
     
-* handlerException内部建议手动try{  你的异常处理逻辑  }catch(Throwable e){ } ，以防handlerException内部再次抛出异常，导致循环调用handlerException
+* HandlerException internal advice manually try {your exception handling logic} catch (throwable e) {}, in case handlerException internally throws an exception again, causing the loop to call handlerException
     
-* 若设置了Thread.setDefaultUncaughtExceptionHandler则可能无法捕获子线程异常。
+* If you set the Thread.setDefaultUncaughtExceptionHandler, you may not be able to catch a child thread exception.
 
-虽然可以捕获到所有异常，但可能会导致一些莫名其妙的问题，比如view初始化时发生了异常，异常后面的代码得不到执行，虽然不
-会导致app crash但view内部已经出现了问题，运行时就会出现很奇葩的现象。再比如activity声明周期方法中抛出了异常，则生
-命周期就会不完整，从而导致各种奇葩的现象。
-
-虽然会导致各种奇葩问题发生，但可以最大程度的保证APP正常运行，很多时候我们希望主线程即使抛出异常也不影响app的正常使用，比如我们
-给某个view设置背景色时，由于view是null就会导致app crash，像这种问题我们更希望即使view没法设置颜色也不要crash，这
-时Cockroach就可以满足你的需求。
-
-handlerException(final Thread thread, final Throwable throwable)内部建议请求自己服务器决定该如何处理该异常，是
-直接忽略还是杀死APP又或者其他操作。
+Although you can catch all the exceptions, but may lead to some strange problems, such as view initialization occurred when the exception, abnormal code behind the implementation of the implementation, although not
+Will lead to app crash But the view has been a problem inside the run, there will be very strange when the phenomenon.
 
 
-Cockroach采用android标准API编写，无依赖，足够轻量，轻量到只有不到100行代码，一般不会存在兼容性问题，也不存在性能上的问题，可以兼容所有android版本。
+Although it will lead to a variety of strange problems, but can maximize the normal operation of APP to ensure that many times we hope that the main thread even if the exception does not affect the normal use of the app, such as we
+To set the background color for a view, because the view is null will lead to app crash, like this problem we hope that even if the view can not set the color and do not crash
+When Cockroach can meet your needs.
 
-已上传到jcenter， compile 'com.wanjian:cockroach:0.0.5'
-
-效果视频  [http://weibo.com/tv/v/EvM57BR6O?fid=1034:40b2f631632f0cf2a096a09c65db89ad](http://weibo.com/tv/v/EvM57BR6O?fid=1034:40b2f631632f0cf2a096a09c65db89ad)
-
-
-
-### 原理分析  
-
-[原理分析](https://github.com/android-notes/Cockroach/blob/master/%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90.md)
+HandlerException (final thread thread, final Throwable throwable) Internal advice Ask your server to decide how to handle the exception,
+Directly ignore or kill APP or other operations.
 
 
+Cockroach using the android standard API written, no reliance, light enough to light to only less than 100 lines of code, generally there will be no compatibility issues, there is no performance on the issue, can be compatible with all android version.
+
+Has been uploaded to jcenter， compile 'com.wanjian:cockroach:0.0.5'
+
+Effect video  [http://weibo.com/tv/v/EvM57BR6O?fid=1034:40b2f631632f0cf2a096a09c65db89ad](http://weibo.com/tv/v/EvM57BR6O?fid=1034:40b2f631632f0cf2a096a09c65db89ad)
