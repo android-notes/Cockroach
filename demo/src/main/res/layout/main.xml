@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+    <Button
+        android:id="@+id/install"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="装载Cockroach" />
+
+    <Button
+        android:id="@+id/uninstall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="卸载Cockroach" />
+
+    <Button
+        android:id="@+id/click"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="点击异常" />
+
+    <Button
+        android:id="@+id/thread"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="子线程异常" />
+
+    <Button
+        android:id="@+id/handler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="handler异常" />
+
+    <Button
+        android:id="@+id/act"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开启新页面" />
+
+    <Button
+        android:id="@+id/noact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开启未声明新页面" />
+
+</LinearLayout>
