@@ -8,6 +8,9 @@
 * Cockroach 2.0试图在APP即将崩溃时尽量去挽救，不至于情况更糟糕。
 
 
+用一张图片来形容就是
+
+![img](https://github.com/android-notes/Cockroach/blob/X/wanjiu.jpeg?raw=true)
 
 
 ## 使用姿势
