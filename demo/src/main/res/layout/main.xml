@@ -1,51 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-
-    <Button
-        android:id="@+id/install"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="装载Cockroach" />
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/uninstall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="卸载Cockroach" />
 
-    <Button
-        android:id="@+id/click"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="点击异常" />
 
-    <Button
-        android:id="@+id/thread"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="子线程异常" />
+        <Button
+            android:id="@+id/click"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点击异常" />
 
-    <Button
-        android:id="@+id/handler"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="handler异常" />
+        <Button
+            android:id="@+id/thread"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="子线程异常" />
 
-    <Button
-        android:id="@+id/act"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="开启新页面" />
+        <Button
+            android:id="@+id/handler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="handler异常" />
 
-    <Button
-        android:id="@+id/noact"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="开启未声明新页面" />
+        <Button
+            android:id="@+id/act"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开启新页面" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/noact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开启未声明新页面" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="生命周期抛出异常导致的黑屏测试"
+            android:textColor="#000" />
+
+
+        <Button
+            android:id="@+id/newActOnCreate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开启新页面onCreate方法异常"
+            android:textAllCaps="false" />
+
+
+        <Button
+            android:id="@+id/newActOnStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开启新页面onStart方法异常"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/newActOnReStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开启新页面onReStart方法异常"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/newActOnResume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开启新页面OnResume方法异常"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/newActOnPause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开启新页面onPause方法异常"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/newActOnStop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开启新页面OnStop方法异常"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/newActonDestroy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开启新页面onDestroy方法异常"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/newActFinish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开启新页面finish方法异常"
+            android:textAllCaps="false" />
+    </LinearLayout>
+</ScrollView>
