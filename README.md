@@ -1,4 +1,6 @@
 
+# [--> cockroach2.0版，有效减少黑屏](https://github.com/android-notes/Cockroach/tree/X)
+
 Language
 
 * [English](https://github.com/android-notes/Cockroach/blob/master/README_en.md)
