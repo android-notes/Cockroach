@@ -9,12 +9,12 @@
         android:orientation="vertical">
 
 
-
         <Button
             android:id="@+id/click"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="点击异常" />
+
 
         <Button
             android:id="@+id/thread"
@@ -26,13 +26,15 @@
             android:id="@+id/handler"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="handler异常" />
+            android:text="handler异常"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/act"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="开启新页面" />
+            android:text="recyclerview bindview异常"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/noact"
@@ -103,6 +105,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="开启新页面finish方法异常"
+            android:textAllCaps="false" />
+
+        <com.wanjian.demo.ExceptionView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="view 测量、绘制、布局抛出异常导致黑屏"
             android:textAllCaps="false" />
     </LinearLayout>
 </ScrollView>

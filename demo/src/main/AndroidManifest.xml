@@ -19,6 +19,7 @@
         </activity>
         <activity android:name=".SecondAct" />
         <activity android:name=".LifecycleExceptionActivity" />
+        <activity android:name=".support.DebugSafeModeTipActivity" />
     </application>
 
 </manifest>

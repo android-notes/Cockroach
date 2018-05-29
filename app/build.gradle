@@ -22,7 +22,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
-
 //添加
 publish {
 //    userOrg = 'wanjiannotes'

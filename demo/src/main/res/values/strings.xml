@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Cockroach demo</string>
+    <string name="debug_safe_mode">APP已经崩溃了，请告知开发者！</string>
+    <string name="safe_mode_tips">已经进入安全模式</string>
+    <string name="safe_mode_excep_tips">捕获到导致崩溃的异常</string>
+    <string name="safe_mode_black_screen_tips">黑屏了</string>
 </resources>
