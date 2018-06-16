@@ -2,6 +2,8 @@
 
 ## Cockroach 2.0
 
+[cockroach1.0版在这](https://github.com/android-notes/Cockroach/tree/master)
+
 ### Cockroach 2.0新特性
 * Cockroach 2.0减少了Cockroach 1.0版本中Activity生命周期中抛出异常黑屏的问题。
 * Cockroach 1.0未雨绸缪，提前做好准备，等待异常到来。Cockroach 2.0马后炮，只有当抛出异常时才去拯救。
