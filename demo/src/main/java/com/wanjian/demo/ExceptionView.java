@@ -12,11 +12,11 @@ import android.widget.Button;
  */
 
 public class ExceptionView extends Button {
+    boolean excep = false;
+
     public ExceptionView(Context context) {
         this(context, null);
     }
-
-    boolean excep = false;
 
     public ExceptionView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);

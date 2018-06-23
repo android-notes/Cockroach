@@ -1,34 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#000"
-    android:gravity="center"
-    android:orientation="vertical"
-    tools:context=".support.DebugSafeModeTipActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#ec0000"
-        android:padding="10dp"
-        android:text=" FBI  WARNING"
-        android:textColor="#fff"
-        android:textSize="30dp"
-        android:textStyle="bold" />
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000"
         android:gravity="center"
-        android:padding="15dp"
-        android:text="@string/debug_safe_mode"
-        android:textColor="#fff"
-        android:textSize="18dp"
-        android:textStyle="bold" />
+        android:orientation="vertical"
+        tools:context=".support.DebugSafeModeTipActivity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#ec0000"
+            android:padding="10dp"
+            android:text=" FBI  WARNING"
+            android:textColor="#fff"
+            android:textSize="30dp"
+            android:textStyle="bold" />
 
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/debug_safe_mode"
+            android:textColor="#fff"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/theme_stroke_selector"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="查看历史崩溃记录"
+            android:textColor="@drawable/theme_stroke_selector"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="开发阶段建议弹出该Activity,以免遗漏bug。线上版本就不要展示该页面了。当看到该提示时就说明APP已经崩溃了，开发者可以手动杀进程，不要再让APP继续运行了"
+            android:textColor="#fff"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+</FrameLayout>

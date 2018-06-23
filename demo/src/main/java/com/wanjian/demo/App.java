@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.wanjian.cockroach.Cockroach;
 import com.wanjian.cockroach.ExceptionHandler;
+import com.wanjian.demo.support.CrashLog;
 import com.wanjian.demo.support.DebugSafeModeTipActivity;
 import com.wanjian.demo.support.DebugSafeModeUI;
 
@@ -33,6 +34,7 @@ public class App extends Application {
             @Override
             protected void onUncaughtExceptionHappened(Thread thread, Throwable throwable) {
                 Log.e("AndroidRuntime", "--->onUncaughtExceptionHappened:" + thread + "<---", throwable);
+                CrashLog.saveCrashLog(getApplicationContext(), throwable);
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {

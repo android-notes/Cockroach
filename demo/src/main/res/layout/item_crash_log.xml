@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#000"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            tools:text="标题" />
+
+        <TextView
+            android:id="@+id/copy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/theme_stroke_selector"
+            android:padding="8dp"
+            android:text="复制"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/theme_stroke_selector">
+
+        <EditText
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:editable="false"
+            android:inputType="none"
+            android:padding="10dp"
+            android:paddingLeft="20dp"
+            android:textColor="@color/white"
+            android:textIsSelectable="true"
+            android:textSize="13dp"
+            android:textStyle="bold"
+            tools:text="内容。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。" />
+    </HorizontalScrollView>
+</LinearLayout>
