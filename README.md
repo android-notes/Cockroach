@@ -2,6 +2,8 @@
 
 ## Cockroach 2.0
 
+* 修复Android P反射限制导致的Activity生命周期异常无法finish Activity问题 
+
 [cockroach1.0版在这](https://github.com/android-notes/Cockroach/tree/master)
 
 ### Cockroach 2.0新特性
