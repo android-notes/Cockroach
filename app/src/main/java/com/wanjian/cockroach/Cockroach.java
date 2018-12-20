@@ -1,5 +1,6 @@
 package com.wanjian.cockroach;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -9,9 +10,12 @@ import com.wanjian.cockroach.compat.ActivityKillerV15_V20;
 import com.wanjian.cockroach.compat.ActivityKillerV21_V23;
 import com.wanjian.cockroach.compat.ActivityKillerV24_V25;
 import com.wanjian.cockroach.compat.ActivityKillerV26;
+import com.wanjian.cockroach.compat.ActivityKillerV28;
 import com.wanjian.cockroach.compat.IActivityKiller;
 
 import java.lang.reflect.Field;
+
+import me.weishu.reflection.Reflection;
 
 /**
  * Created by wanjian on 2017/2/14.
@@ -27,9 +31,15 @@ public final class Cockroach {
     private Cockroach() {
     }
 
-    public static void install(ExceptionHandler exceptionHandler) {
+    public static void install(Context ctx, ExceptionHandler exceptionHandler) {
         if (sInstalled) {
             return;
+        }
+        try {
+            //解除 android P 反射限制
+            Reflection.unseal(ctx);
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
         }
         sInstalled = true;
         sExceptionHandler = exceptionHandler;
@@ -57,7 +67,9 @@ public final class Cockroach {
      */
     private static void initActivityKiller() {
         //各版本android的ActivityManager获取方式，finishActivity的参数，token(binder对象)的获取不一样
-        if (Build.VERSION.SDK_INT >= 26) {
+        if (Build.VERSION.SDK_INT >= 28) {
+            sActivityKiller = new ActivityKillerV28();
+        } else if (Build.VERSION.SDK_INT >= 26) {
             sActivityKiller = new ActivityKillerV26();
         } else if (Build.VERSION.SDK_INT == 25 || Build.VERSION.SDK_INT == 24) {
             sActivityKiller = new ActivityKillerV24_V25();
@@ -97,6 +109,19 @@ public final class Cockroach {
         callbackField.set(mhHandler, new Handler.Callback() {
             @Override
             public boolean handleMessage(Message msg) {
+                if (Build.VERSION.SDK_INT >= 28) {//android P 生命周期全部走这
+                    final int EXECUTE_TRANSACTION = 159;
+                    if (msg.what == EXECUTE_TRANSACTION) {
+                        try {
+                            mhHandler.handleMessage(msg);
+                        } catch (Throwable throwable) {
+                            sActivityKiller.finishLaunchActivity(msg);
+                            notifyException(throwable);
+                        }
+                        return true;
+                    }
+                    return false;
+                }
                 switch (msg.what) {
                     case LAUNCH_ACTIVITY:// startActivity--> activity.attach  activity.onCreate  r.activity!=null  activity.onStart  activity.onResume
                         try {

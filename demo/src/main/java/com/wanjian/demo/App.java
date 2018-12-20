@@ -30,7 +30,7 @@ public class App extends Application {
         final Thread.UncaughtExceptionHandler sysExcepHandler = Thread.getDefaultUncaughtExceptionHandler();
         final Toast toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
         DebugSafeModeUI.init(this);
-        Cockroach.install(new ExceptionHandler() {
+        Cockroach.install(this, new ExceptionHandler() {
             @Override
             protected void onUncaughtExceptionHappened(Thread thread, Throwable throwable) {
                 Log.e("AndroidRuntime", "--->onUncaughtExceptionHappened:" + thread + "<---", throwable);
