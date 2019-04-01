@@ -2,6 +2,20 @@
 
 ## Cockroach 2.0
 
+## 为什么开发这个库
+很多时候由于一些微不足道的bug导致app崩溃很可惜，android默认的异常杀进程机制简单粗暴，但很多时候让app崩溃其实也并不能解决问题。
+
+有些bug可能是系统bug，对于这些难以预料的系统bug我们不好绕过，还有一些bug是我们自己编码造成的，对于有些bug来说直接忽略掉的话可能只是导致部分不重要的功能没法使用而已，又或者对用户来说完全没有影响，这种情况总比每次都崩溃要好很多。
+
+下面介绍几个真实案例来说明这个库的优势：
+
+* 有一款特殊的手机，每次开启某个Activity时都报错，提示没有在清单中声明，但其他几百万机型都没问题，这种情况很可能就是系统bug了，由于是在onclick回调里直接使用startActivity来开启Activity，onclick里没有其他逻辑，对于这种情况的话直接忽略掉是最好的选择，因为onclick回调是在一个单独的message中的，执行完了该message就接着执行下一个message，该message执行不完也不会影响下一个message的执行，调用startactivity后会同步等待ams返回的错误码，结果这款特殊的机型返回了没有声明这个Activity，所以对于这种情况可以直接忽略掉
+
+* 我们在app中集成了个三方的数据统计库，这个库是在Application的onCreate的最后初始化的，但上线后执行初始化时却崩溃了，对于这种情况直接忽略掉也是最好的选择。根据app的启动流程来分析，Application的创建以及onCreate方法的调用都是在同一个message中执行的，该message执行的最后调用了Application的onCreate方法，又由于这个数据统计库是在onCreate的最后才初始化的，所以直接忽略的话也没有影响，就跟没有初始化过一样
+
+* 还有各种执行onclick时触发的异常，这些很多时候都是可以直接忽略掉的
+
+### 更新日志
 * 修复Android P反射限制导致的Activity生命周期异常无法finish Activity问题 
 
 [cockroach1.0版在这](https://github.com/android-notes/Cockroach/tree/master)
