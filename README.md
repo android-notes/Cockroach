@@ -13,6 +13,35 @@
 
 * 我们在app中集成了个三方的数据统计库，这个库是在Application的onCreate的最后初始化的，但上线后执行初始化时却崩溃了，对于这种情况直接忽略掉也是最好的选择。根据app的启动流程来分析，Application的创建以及onCreate方法的调用都是在同一个message中执行的，该message执行的最后调用了Application的onCreate方法，又由于这个数据统计库是在onCreate的最后才初始化的，所以直接忽略的话也没有影响，就跟没有初始化过一样
 
+* 我们做了个检查app是否需要升级的功能，若需要升级，则使用context开启一个dialog风格的Activity提示是否需要升级，测试阶段没有任何问题，但一上线就崩溃了，提示没有设置FLAG_ACTIVITY_NEW_TASK,由于启动Activity的context是Application，但在高版本android中，可以使用Application启动Activity并且不设置这个FLAG，但在低版本中必须要设置这个FLAG，对于这种问题也可以直接忽略
+
+  API28 ContextImpl startActivity源码
+ ```java
+  public void startActivity(Intent intent, Bundle options) {
+        warnIfCallingFromSystemProcess();
+
+        // Calling start activity from outside an activity without FLAG_ACTIVITY_NEW_TASK is
+        // generally not allowed, except if the caller specifies the task id the activity should
+        // be launched in. A bug was existed between N and O-MR1 which allowed this to work. We
+        // maintain this for backwards compatibility.
+        final int targetSdkVersion = getApplicationInfo().targetSdkVersion;
+
+        if ((intent.getFlags() & Intent.FLAG_ACTIVITY_NEW_TASK) == 0
+                && (targetSdkVersion < Build.VERSION_CODES.N
+                        || targetSdkVersion >= Build.VERSION_CODES.P)
+                && (options == null
+                        || ActivityOptions.fromBundle(options).getLaunchTaskId() == -1)) {
+            throw new AndroidRuntimeException(
+                    "Calling startActivity() from outside of an Activity "
+                            + " context requires the FLAG_ACTIVITY_NEW_TASK flag."
+                            + " Is this really what you want?");
+        }
+        mMainThread.getInstrumentation().execStartActivity(
+                getOuterContext(), mMainThread.getApplicationThread(), null,
+                (Activity) null, intent, -1, options);
+    }
+ ```
+
 * 还有各种执行onclick时触发的异常，这些很多时候都是可以直接忽略掉的
 
 ### 更新日志
