@@ -253,4 +253,4 @@ Cockroach using the android standard API written, no reliance, light enough to l
 
 Has been uploaded to jcenter， compile 'com.wanjian:cockroach:0.0.5'
 
-Effect video  [http://weibo.com/tv/v/EvM57BR6O?fid=1034:40b2f631632f0cf2a096a09c65db89ad](http://weibo.com/tv/v/EvM57BR6O?fid=1034:40b2f631632f0cf2a096a09c65db89ad)
+
