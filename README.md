@@ -149,8 +149,7 @@ cockroach2.0通过替换`ActivityThread.mH.mCallback`，实现拦截Activity生�
 
 
 
-相关视频  [http://weibo.com/tv/v/EvM57BR6O?fid=1034:40b2f631632f0cf2a096a09c65db89ad](http://weibo.com/tv/v/EvM57BR6O?fid=1034:40b2f631632f0cf2a096a09c65db89ad)
-
+相关视频 
 [https://github.com/android-notes/Cockroach/blob/master/cockroach.mp4?raw=true](https://github.com/android-notes/Cockroach/blob/master/cockroach.mp4?raw=true)
 
  
