@@ -2,6 +2,10 @@
 
 ## Cockroach 2.0
 
+## 他们都在用
+
+![](https://github.com/android-notes/Cockroach/blob/X/logo.jpg)
+
 ## 为什么开发这个库
 很多时候由于一些微不足道的bug导致app崩溃很可惜，android默认的异常杀进程机制简单粗暴，但很多时候让app崩溃其实也并不能解决问题。
 
