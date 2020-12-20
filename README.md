@@ -65,8 +65,7 @@
 
 
 >特别注意： 当view的measure,layout,draw，以及recyclerview的bindviewholder 方法抛出异常时会导致
-viewrootimpl挂掉，此时会回调 onMayBeBlackScreen 方法，建议直接杀死app。以后的版本会只
-finish掉viewrootimpl挂掉的Activity而不是直接杀死app
+viewrootimpl挂掉，此时会回调 onMayBeBlackScreen 方法，建议直接杀死app。目前可以拦截到抛出异常的ViewRootImpl，具体参考这https://github.com/android-notes/SwissArmyKnife/blob/master/saklib/src/main/java/com/wanjian/sak/system/traversals/ViewTraversalsCompact.java
 
 ## 使用姿势
 
