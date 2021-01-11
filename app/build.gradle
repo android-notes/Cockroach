@@ -20,7 +20,9 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'me.weishu:free_reflection:1.2.0'
+    
+    //android 11
+    compile 'me.weishu:free_reflection:3.0.1'
 }
 
 //添加
