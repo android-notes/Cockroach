@@ -7,29 +7,28 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-
 /**
  * Created by wanjian on 2018/1/22.
  */
-
 public class MainAct extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
-
         findViewById(R.id.click).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 throw new RuntimeException("点击异常");
             }
         });
         findViewById(R.id.thread).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 new Thread() {
+
                     @Override
                     public void run() {
                         super.run();
@@ -39,10 +38,11 @@ public class MainAct extends Activity {
             }
         });
         findViewById(R.id.handler).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-
                 new Handler().post(new Runnable() {
+
                     @Override
                     public void run() {
                         throw new RuntimeException("handler异常");
@@ -50,15 +50,15 @@ public class MainAct extends Activity {
                 });
             }
         });
-
         findViewById(R.id.act).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainAct.this, SecondAct.class));
             }
         });
-
         findViewById(R.id.noact).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainAct.this, UnknowAct.class));
@@ -66,6 +66,7 @@ public class MainAct extends Activity {
         });
         ////////黑屏测试//////////
         findViewById(R.id.newActOnCreate).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainAct.this, LifecycleExceptionActivity.class);
@@ -74,6 +75,7 @@ public class MainAct extends Activity {
             }
         });
         findViewById(R.id.newActOnStart).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainAct.this, LifecycleExceptionActivity.class);
@@ -82,6 +84,7 @@ public class MainAct extends Activity {
             }
         });
         findViewById(R.id.newActOnReStart).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainAct.this, LifecycleExceptionActivity.class);
@@ -90,6 +93,7 @@ public class MainAct extends Activity {
             }
         });
         findViewById(R.id.newActOnResume).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainAct.this, LifecycleExceptionActivity.class);
@@ -98,6 +102,7 @@ public class MainAct extends Activity {
             }
         });
         findViewById(R.id.newActOnPause).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainAct.this, LifecycleExceptionActivity.class);
@@ -106,6 +111,7 @@ public class MainAct extends Activity {
             }
         });
         findViewById(R.id.newActOnStop).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainAct.this, LifecycleExceptionActivity.class);
@@ -114,6 +120,7 @@ public class MainAct extends Activity {
             }
         });
         findViewById(R.id.newActonDestroy).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainAct.this, LifecycleExceptionActivity.class);
@@ -122,6 +129,7 @@ public class MainAct extends Activity {
             }
         });
         findViewById(R.id.newActFinish).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainAct.this, LifecycleExceptionActivity.class);
@@ -129,8 +137,5 @@ public class MainAct extends Activity {
                 startActivity(intent);
             }
         });
-
-
     }
-
 }

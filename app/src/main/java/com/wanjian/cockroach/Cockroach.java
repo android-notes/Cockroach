@@ -5,27 +5,27 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-
 import com.wanjian.cockroach.compat.ActivityKillerV15_V20;
 import com.wanjian.cockroach.compat.ActivityKillerV21_V23;
 import com.wanjian.cockroach.compat.ActivityKillerV24_V25;
 import com.wanjian.cockroach.compat.ActivityKillerV26;
 import com.wanjian.cockroach.compat.ActivityKillerV28;
 import com.wanjian.cockroach.compat.IActivityKiller;
-
 import java.lang.reflect.Field;
-
 import me.weishu.reflection.Reflection;
 
 /**
  * Created by wanjian on 2017/2/14.
  */
-
 public final class Cockroach {
 
     private static IActivityKiller sActivityKiller;
+
     private static ExceptionHandler sExceptionHandler;
-    private static boolean sInstalled = false;//标记位，避免重复安装卸载
+
+    //标记位，避免重复安装卸载
+    private static boolean sInstalled = false;
+
     private static boolean sIsSafeMode;
 
     private Cockroach() {
@@ -43,10 +43,9 @@ public final class Cockroach {
         }
         sInstalled = true;
         sExceptionHandler = exceptionHandler;
-
         initActivityKiller();
-
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+
             @Override
             public void uncaughtException(Thread t, Throwable e) {
                 if (sExceptionHandler != null) {
@@ -58,7 +57,6 @@ public final class Cockroach {
                 }
             }
         });
-
     }
 
     /**
@@ -80,7 +78,6 @@ public final class Cockroach {
         } else if (Build.VERSION.SDK_INT < 15) {
             sActivityKiller = new ActivityKillerV15_V20();
         }
-
         try {
             hookmH();
         } catch (Throwable e) {
@@ -89,7 +86,6 @@ public final class Cockroach {
     }
 
     private static void hookmH() throws Exception {
-
         final int LAUNCH_ACTIVITY = 100;
         final int PAUSE_ACTIVITY = 101;
         final int PAUSE_ACTIVITY_FINISHING = 102;
@@ -100,16 +96,17 @@ public final class Cockroach {
         final int RELAUNCH_ACTIVITY = 126;
         Class activityThreadClass = Class.forName("android.app.ActivityThread");
         Object activityThread = activityThreadClass.getDeclaredMethod("currentActivityThread").invoke(null);
-
         Field mhField = activityThreadClass.getDeclaredField("mH");
         mhField.setAccessible(true);
         final Handler mhHandler = (Handler) mhField.get(activityThread);
         Field callbackField = Handler.class.getDeclaredField("mCallback");
         callbackField.setAccessible(true);
         callbackField.set(mhHandler, new Handler.Callback() {
+
             @Override
             public boolean handleMessage(Message msg) {
-                if (Build.VERSION.SDK_INT >= 28) {//android P 生命周期全部走这
+                if (Build.VERSION.SDK_INT >= 28) {
+                    //android P 生命周期全部走这
                     final int EXECUTE_TRANSACTION = 159;
                     if (msg.what == EXECUTE_TRANSACTION) {
                         try {
@@ -122,8 +119,9 @@ public final class Cockroach {
                     }
                     return false;
                 }
-                switch (msg.what) {
-                    case LAUNCH_ACTIVITY:// startActivity--> activity.attach  activity.onCreate  r.activity!=null  activity.onStart  activity.onResume
+                switch(msg.what) {
+                    case // startActivity--> activity.attach  activity.onCreate  r.activity!=null  activity.onStart  activity.onResume
+                    LAUNCH_ACTIVITY:
                         try {
                             mhHandler.handleMessage(msg);
                         } catch (Throwable throwable) {
@@ -131,7 +129,8 @@ public final class Cockroach {
                             notifyException(throwable);
                         }
                         return true;
-                    case RESUME_ACTIVITY://回到activity onRestart onStart onResume
+                    case //回到activity onRestart onStart onResume
+                    RESUME_ACTIVITY:
                         try {
                             mhHandler.handleMessage(msg);
                         } catch (Throwable throwable) {
@@ -139,7 +138,8 @@ public final class Cockroach {
                             notifyException(throwable);
                         }
                         return true;
-                    case PAUSE_ACTIVITY_FINISHING://按返回键 onPause
+                    case //按返回键 onPause
+                    PAUSE_ACTIVITY_FINISHING:
                         try {
                             mhHandler.handleMessage(msg);
                         } catch (Throwable throwable) {
@@ -147,7 +147,8 @@ public final class Cockroach {
                             notifyException(throwable);
                         }
                         return true;
-                    case PAUSE_ACTIVITY://开启新页面时，旧页面执行 activity.onPause
+                    case //开启新页面时，旧页面执行 activity.onPause
+                    PAUSE_ACTIVITY:
                         try {
                             mhHandler.handleMessage(msg);
                         } catch (Throwable throwable) {
@@ -155,7 +156,8 @@ public final class Cockroach {
                             notifyException(throwable);
                         }
                         return true;
-                    case STOP_ACTIVITY_HIDE://开启新页面时，旧页面执行 activity.onStop
+                    case //开启新页面时，旧页面执行 activity.onStop
+                    STOP_ACTIVITY_HIDE:
                         try {
                             mhHandler.handleMessage(msg);
                         } catch (Throwable throwable) {
@@ -163,7 +165,8 @@ public final class Cockroach {
                             notifyException(throwable);
                         }
                         return true;
-                    case DESTROY_ACTIVITY:// 关闭activity onStop  onDestroy
+                    case // 关闭activity onStop  onDestroy
+                    DESTROY_ACTIVITY:
                         try {
                             mhHandler.handleMessage(msg);
                         } catch (Throwable throwable) {
@@ -175,7 +178,6 @@ public final class Cockroach {
             }
         });
     }
-
 
     private static void notifyException(Throwable throwable) {
         if (sExceptionHandler == null) {
@@ -225,21 +227,15 @@ public final class Cockroach {
         if (elements == null) {
             return;
         }
-
         for (int i = elements.length - 1; i > -1; i--) {
             if (elements.length - i > 20) {
                 return;
             }
             StackTraceElement element = elements[i];
-            if ("android.view.Choreographer".equals(element.getClassName())
-                    && "Choreographer.java".equals(element.getFileName())
-                    && "doFrame".equals(element.getMethodName())) {
+            if ("android.view.Choreographer".equals(element.getClassName()) && "Choreographer.java".equals(element.getFileName()) && "doFrame".equals(element.getMethodName())) {
                 sExceptionHandler.mayBeBlackScreen(e);
                 return;
             }
-
         }
     }
-
-
 }

@@ -12,23 +12,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 /**
  * Created by wanjian on 2018/1/22.
  */
-
 public class SecondAct extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.second);
-
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-
         setAdapter(recyclerView);
-
     }
 
     private void setAdapter(final RecyclerView recyclerView) {
@@ -37,6 +31,7 @@ public class SecondAct extends Activity {
         decoration.setDrawable(getResources().getDrawable(R.drawable.divider));
         recyclerView.addItemDecoration(decoration);
         recyclerView.setAdapter(new RecyclerView.Adapter() {
+
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item, recyclerView, false);
@@ -48,8 +43,8 @@ public class SecondAct extends Activity {
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
                 ((TextView) holder.itemView.getTag(R.id.txt)).setText(String.valueOf(position));
-
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
+
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(SecondAct.this, "POSITION " + position, Toast.LENGTH_SHORT).show();

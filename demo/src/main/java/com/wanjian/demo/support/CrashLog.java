@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
@@ -19,6 +18,7 @@ import java.util.TreeMap;
 /**
  */
 public class CrashLog {
+
     public static final String TAG = "CrashLog";
 
     public static void saveCrashLog(Context context, Throwable throwable) {
@@ -26,11 +26,9 @@ public class CrashLog {
         saveCrashInfo2File(context, throwable, map);
     }
 
-
     private static Map<String, String> collectDeviceInfo(Context ctx) {
         Map<String, String> infos = new TreeMap<>();
         try {
-
             infos.put("systemVersion", Build.VERSION.RELEASE);
             PackageManager pm = ctx.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(ctx.getPackageName(), PackageManager.GET_ACTIVITIES);
@@ -60,7 +58,6 @@ public class CrashLog {
             String value = entry.getValue();
             sb.append(key).append("=").append(value).append("\n");
         }
-
         Writer writer = new StringWriter();
         PrintWriter printWriter = new PrintWriter(writer);
         ex.printStackTrace(printWriter);
@@ -72,13 +69,11 @@ public class CrashLog {
         printWriter.close();
         String result = writer.toString();
         sb.append(result);
-
         try {
             long timestamp = System.currentTimeMillis();
             String time = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
             String fileName = "crash-" + time + "-" + timestamp + ".log";
             String cachePath = crashLogDir(context);
-
             File dir = new File(cachePath);
             dir.mkdirs();
             FileOutputStream fos = new FileOutputStream(cachePath + fileName);
@@ -89,7 +84,6 @@ public class CrashLog {
     }
 
     public static String crashLogDir(Context context) {
-        return context.getCacheDir().getPath() + File.separator + "crash" + File
-                .separator;
+        return context.getCacheDir().getPath() + File.separator + "crash" + File.separator;
     }
 }
