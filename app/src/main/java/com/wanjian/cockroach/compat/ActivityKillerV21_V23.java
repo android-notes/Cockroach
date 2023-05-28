@@ -28,29 +28,17 @@ public class ActivityKillerV21_V23 implements IActivityKiller {
 
     @Override
     public void finishResumeActivity(Message message) {
-        try {
-            finish((IBinder) message.obj);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        finishIBinderFromMessage(message);
     }
 
     @Override
     public void finishPauseActivity(Message message) {
-        try {
-            finish((IBinder) message.obj);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        finishIBinderFromMessage(message);
     }
 
     @Override
     public void finishStopActivity(Message message) {
-        try {
-            finish((IBinder) message.obj);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        finishIBinderFromMessage(message);
     }
 
     private void finish(IBinder binder) throws Exception {
@@ -59,5 +47,13 @@ public class ActivityKillerV21_V23 implements IActivityKiller {
         Object activityManager = getDefaultMethod.invoke(null);
         Method finishActivityMethod = activityManager.getClass().getDeclaredMethod("finishActivity", IBinder.class, int.class, Intent.class, boolean.class);
         finishActivityMethod.invoke(activityManager, binder, Activity.RESULT_CANCELED, null, false);
+    }
+
+    private void finishIBinderFromMessage(Message message) {
+        try {
+            finish((IBinder) message.obj);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

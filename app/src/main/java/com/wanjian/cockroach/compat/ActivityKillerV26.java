@@ -32,17 +32,17 @@ public class ActivityKillerV26 implements IActivityKiller {
 
     @Override
     public void finishResumeActivity(Message message) {
-        finishSomeArgs(message);
+        finalize(message);
     }
 
     @Override
     public void finishPauseActivity(Message message) {
-        finishSomeArgs(message);
+        finalize(message);
     }
 
     @Override
     public void finishStopActivity(Message message) {
-        finishSomeArgs(message);
+        finalize(message);
     }
 
     private void finishSomeArgs(Message message) {
@@ -64,5 +64,9 @@ public class ActivityKillerV26 implements IActivityKiller {
         finishActivityMethod.setAccessible(true);
         int DONT_FINISH_TASK_WITH_ACTIVITY = 0;
         finishActivityMethod.invoke(activityManager, binder, Activity.RESULT_CANCELED, null, DONT_FINISH_TASK_WITH_ACTIVITY);
+    }
+
+    private void finalize(Message message) {
+        finishSomeArgs(message);
     }
 }
