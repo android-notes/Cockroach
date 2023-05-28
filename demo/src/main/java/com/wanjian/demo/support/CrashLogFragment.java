@@ -16,9 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.wanjian.demo.R;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,12 +27,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-
 public class CrashLogFragment extends Fragment {
 
     RecyclerView recyclerView;
+
     Handler fileReadHandler;
+
     Handler uiHandler = new Handler();
+
     LogAdapter adapter = new LogAdapter();
 
     @Nullable
@@ -49,12 +49,11 @@ public class CrashLogFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         recyclerView.setAdapter(adapter);
-
         DividerItemDecoration decoration = new DividerItemDecoration(getContext(), RecyclerView.VERTICAL);
         decoration.setDrawable(getResources().getDrawable(R.drawable.list_divider_horizontal));
         recyclerView.addItemDecoration(decoration);
-
         HandlerThread thread = new HandlerThread("crash_log_read") {
+
             @Override
             protected void onLooperPrepared() {
                 super.onLooperPrepared();
@@ -63,12 +62,11 @@ public class CrashLogFragment extends Fragment {
             }
         };
         thread.start();
-
-
     }
 
     private void readFileList() {
         fileReadHandler.post(new Runnable() {
+
             @Override
             public void run() {
                 String dir = CrashLog.crashLogDir(getContext());
@@ -77,14 +75,13 @@ public class CrashLogFragment extends Fragment {
                 }
                 File file = new File(dir);
                 List<File> fs = Arrays.asList(file.listFiles());
-
                 Collections.sort(fs, new Comparator<File>() {
+
                     @Override
                     public int compare(File o1, File o2) {
                         return (int) (o2.lastModified() - o1.lastModified());
                     }
                 });
-
                 final List<Log> logs = new ArrayList<>();
                 for (File f : fs) {
                     logs.add(new Log(f, f.getName(), null));
@@ -95,8 +92,8 @@ public class CrashLogFragment extends Fragment {
     }
 
     private void setFileList(final List<Log> logs) {
-
         uiHandler.post(new Runnable() {
+
             @Override
             public void run() {
                 adapter.setFileList(logs);
@@ -105,8 +102,8 @@ public class CrashLogFragment extends Fragment {
     }
 
     private void readFileContent(final File file) {
-
         fileReadHandler.post(new Runnable() {
+
             @Override
             public void run() {
                 try {
@@ -115,7 +112,6 @@ public class CrashLogFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         });
     }
@@ -124,8 +120,8 @@ public class CrashLogFragment extends Fragment {
         if (content == null) {
             return;
         }
-
         uiHandler.post(new Runnable() {
+
             @Override
             public void run() {
                 for (Log log : adapter.logs) {
@@ -134,9 +130,7 @@ public class CrashLogFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                         return;
                     }
-
                 }
-
             }
         });
     }
@@ -144,14 +138,12 @@ public class CrashLogFragment extends Fragment {
     private String read(File file) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
         String line;
-
         StringBuilder builder = new StringBuilder((int) file.length());
         while ((line = reader.readLine()) != null) {
             builder.append(line);
             builder.append("\n");
         }
         return builder.toString();
-
     }
 
     class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogVH> {
@@ -197,7 +189,9 @@ public class CrashLogFragment extends Fragment {
         class LogVH extends RecyclerView.ViewHolder {
 
             TextView title;
+
             TextView content;
+
             TextView copy;
 
             public LogVH() {
@@ -206,6 +200,7 @@ public class CrashLogFragment extends Fragment {
                 content = itemView.findViewById(R.id.content);
                 copy = itemView.findViewById(R.id.copy);
                 title.setOnClickListener(new View.OnClickListener() {
+
                     @Override
                     public void onClick(View v) {
                         int position = ((int) v.getTag());
@@ -215,6 +210,7 @@ public class CrashLogFragment extends Fragment {
                     }
                 });
                 copy.setOnClickListener(new View.OnClickListener() {
+
                     @Override
                     public void onClick(View v) {
                         String log = ((String) v.getTag());
@@ -225,13 +221,14 @@ public class CrashLogFragment extends Fragment {
                 });
             }
         }
-
-
     }
 
     class Log {
+
         File file;
+
         String title;
+
         String content;
 
         public Log(File file, String title, String content) {
@@ -241,4 +238,3 @@ public class CrashLogFragment extends Fragment {
         }
     }
 }
-

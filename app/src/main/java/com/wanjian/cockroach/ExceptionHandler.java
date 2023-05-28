@@ -3,19 +3,20 @@ package com.wanjian.cockroach;
 /**
  * Created by wanjian on 2018/5/29.
  */
-
 public abstract class ExceptionHandler {
+
     final void uncaughtExceptionHappened(Thread thread, Throwable throwable) {
-        try {//捕获监听中异常，防止使用方代码抛出异常时导致的反复调用
+        try {
+            //捕获监听中异常，防止使用方代码抛出异常时导致的反复调用
             onUncaughtExceptionHappened(thread, throwable);
         } catch (Throwable t) {
             t.printStackTrace();
         }
     }
 
-
     final void bandageExceptionHappened(Throwable throwable) {
-        try {//捕获监听中异常，防止使用方代码抛出异常时导致的反复调用
+        try {
+            //捕获监听中异常，防止使用方代码抛出异常时导致的反复调用
             onBandageExceptionHappened(throwable);
         } catch (Throwable e) {
             e.printStackTrace();
@@ -57,6 +58,5 @@ public abstract class ExceptionHandler {
     protected abstract void onEnterSafeMode();
 
     protected void onMayBeBlackScreen(Throwable e) {
-
     }
 }

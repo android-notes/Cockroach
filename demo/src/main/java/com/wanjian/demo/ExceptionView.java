@@ -10,8 +10,8 @@ import android.widget.Button;
 /**
  * Created by wanjian on 2018/5/29.
  */
-
 public class ExceptionView extends Button {
+
     boolean excep = false;
 
     public ExceptionView(Context context) {
@@ -20,8 +20,8 @@ public class ExceptionView extends Button {
 
     public ExceptionView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-
         setOnClickListener(new OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 excep = true;

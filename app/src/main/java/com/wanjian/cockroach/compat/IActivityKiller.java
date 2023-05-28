@@ -5,7 +5,6 @@ import android.os.Message;
 /**
  * Created by wanjian on 2018/5/24.
  */
-
 public interface IActivityKiller {
 
     void finishLaunchActivity(Message message);
@@ -15,6 +14,4 @@ public interface IActivityKiller {
     void finishPauseActivity(Message message);
 
     void finishStopActivity(Message message);
-
-
 }

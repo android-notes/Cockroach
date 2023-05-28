@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
 import com.wanjian.cockroach.Cockroach;
 import com.wanjian.demo.R;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +16,15 @@ import java.util.List;
  * Created by wanjian on 2018/5/21.
  * 进入安全模式后给所有act添加一个渐变的绿色顶栏
  */
-
 public class DebugSafeModeUI {
 
     private static int barHeight;
+
     private static List<WeakReference<Activity>> sActivitysWRef = new ArrayList<>();
 
     public static void init(Application application) {
         application.registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacksAdapter() {
+
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 super.onActivityCreated(activity, savedInstanceState);
